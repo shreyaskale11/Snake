@@ -65,7 +65,7 @@ void draw() {
     textSize(20);
     text("SCORE : "+snake.score,500,50);
     if(snake.dead) {
-       snake = new Snake(); 
+       snake = new Snake();
     }
   } else {
     if(!modelLoaded) {
@@ -75,7 +75,7 @@ void draw() {
           pop.naturalSelection();
       } else {
           pop.update();
-          pop.show(); 
+          pop.show();
       }
       fill(150);
       textSize(25);
@@ -98,7 +98,7 @@ void draw() {
         Snake newmodel = new Snake();
         newmodel.brain = model.brain.clone();
         model = newmodel;
-        
+
      }
      textSize(25);
      fill(150);
@@ -129,28 +129,28 @@ void fileSelectedIn(File selection) {
     for(int i=0; i< hidden_nodes; i++) {
       for(int j=0; j< 25; j++) {
         in[i][j] = modelTable.getFloat(j+i*25,"L0");
-      }  
+      }
     }
     weights[0] = new Matrix(in);
-    
+
     for(int h=1; h<weights.length-1; h++) {
        float[][] hid = new float[hidden_nodes][hidden_nodes+1];
        for(int i=0; i< hidden_nodes; i++) {
           for(int j=0; j< hidden_nodes+1; j++) {
             hid[i][j] = modelTable.getFloat(j+i*(hidden_nodes+1),"L"+h);
-          }  
+          }
        }
        weights[h] = new Matrix(hid);
     }
-    
+
     float[][] out = new float[4][hidden_nodes+1];
     for(int i=0; i< 4; i++) {
       for(int j=0; j< hidden_nodes+1; j++) {
         out[i][j] = modelTable.getFloat(j+i*(hidden_nodes+1),"L"+(weights.length-1));
-      }  
+      }
     }
     weights[weights.length-1] = new Matrix(out);
-    
+
     evolution = new ArrayList<Integer>();
     int g = 0;
     int genscore = modelTable.getInt(g,"Graph");
@@ -176,16 +176,16 @@ void fileSelectedOut(File selection) {
     Matrix[] modelWeights = modelToSave.brain.pull();
     float[][] weights = new float[modelWeights.length][];
     for(int i=0; i<weights.length; i++) {
-       weights[i] = modelWeights[i].toArray(); 
+       weights[i] = modelWeights[i].toArray();
     }
     for(int i=0; i<weights.length; i++) {
-       modelTable.addColumn("L"+i); 
+       modelTable.addColumn("L"+i);
     }
     modelTable.addColumn("Graph");
     int maxLen = weights[0].length;
     for(int i=1; i<weights.length; i++) {
        if(weights[i].length > maxLen) {
-          maxLen = weights[i].length; 
+          maxLen = weights[i].length;
        }
     }
     int g = 0;
@@ -198,12 +198,12 @@ void fileSelectedOut(File selection) {
                 g++;
              }
            } else if(i < weights[j].length) {
-              newRow.setFloat("L"+j,weights[j][i]); 
+              newRow.setFloat("L"+j,weights[j][i]);
            }
        }
     }
     saveTable(modelTable, path);
-    
+
   }
 }
 
