@@ -1,10 +1,10 @@
 
-public void settings() {
-  size(1200,800);
-}
+// public void settings() {
+//
+// }
 
 void setup() {
-
+  size(1200,800);
 }
 
 void draw() {
